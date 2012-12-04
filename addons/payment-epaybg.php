@@ -16,7 +16,7 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 	const EUR_TO_BGN = 2;
 	
 	function camptix_init() {
-		$this->options = array_merge( array( 'secret' => '', 'min' => '', 'url_ok', 'url_cancel' ), $this->get_payment_options() );
+		$this->options = array_merge( array( 'secret' => '', 'min' => '', 'url_ok' => '', 'url_cancel' => '', 'sandbox' => true ), $this->get_payment_options() );
 		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 	}
 	
@@ -25,11 +25,15 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 		$this->add_settings_field_helper( 'min', 'MIN', array( $this, 'field_text' ) );
 		$this->add_settings_field_helper( 'url_ok', 'URL to redirect on success', array( $this, 'field_text' ) );
 		$this->add_settings_field_helper( 'url_cancel', 'URL to redirect after failure', array( $this, 'field_text' ) );		
-		
+		$this->add_settings_field_helper( 'sandbox', __( 'Demo Mode', 'camptix' ), array( $this, 'field_yesno' ) );
 	}
 	
 	function validate_options( $input ) {
-		return array_merge( $this->options, $input );
+		$output = array_merge( $this->options, $input );
+		if ( isset( $output['sandbox'] ) ) {
+			$output['sandbox'] = (bool)$output['sandbox'];
+		}
+		return $output;
 	}
 
 	function payment_checkout( $payment_token ) {
@@ -105,8 +109,7 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 		ob_start();
 		$payload = $this->get_payload( $order );
 ?>
-<!-- <form action="https://www.epay.bg/" method=post> -->
-<form action=" https://devep2.datamax.bg/ep2/epay2_demo/" method=post>
+<form action="<?php echo $this->options['sandbox']? 'https://devep2.datamax.bg/ep2/epay2_demo/' : 'https://www.epay.bg/'; ?>" method=post>
 	<input type=hidden name=PAGE value="paylogin">
 	<input type=hidden name=ENCODED value="<?php echo $payload['encoded']; ?>">
 	<input type=hidden name=CHECKSUM value="<?php echo $payload['checksum']; ?>">
@@ -116,8 +119,7 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 <?php if ( $this->options['url_cancel'] ): ?>
 	<input type=hidden name=URL_CANCEL value="<?php echo esc_url( $this->options['url_cancel']); ?>">
 <?php endif; ?>
-
-	<input type=submit>
+	<input type="submit" value="Към Epay.bg →" />
 </form>
 <?php
 		return ob_get_clean();
