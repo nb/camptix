@@ -1114,7 +1114,7 @@ msgstr ""
 
 #: camptix.php:3901
 msgid "You are using a reservation, cool!"
-msgstr ""
+msgstr "Използвате резервация."
 
 #: camptix.php:3905
 msgid "Please select at least one ticket."
@@ -1188,7 +1188,7 @@ msgstr ""
 
 #: camptix.php:3956 camptix.php:4126
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: camptix.php:4026 camptix.php:4169
 msgid "Coupon Applied: <strong>%s</strong>, %s discount"
@@ -1204,7 +1204,7 @@ msgstr ""
 
 #: camptix.php:4051
 msgid "Register &rarr;"
-msgstr ""
+msgstr "Регистрация &rarr;"
 
 #: camptix.php:4073
 msgid ""
@@ -1268,15 +1268,15 @@ msgstr ""
 
 #: camptix.php:4122
 msgid "Order Summary"
-msgstr ""
+msgstr " "
 
 #: camptix.php:4127
 msgid "Per Ticket"
-msgstr ""
+msgstr "Цена на билет"
 
 #: camptix.php:4177
 msgid "Registration Information"
-msgstr ""
+msgstr "Информация за посетителите"
 
 #: camptix.php:4213
 msgid "Send the receipt to this address"
@@ -1284,15 +1284,18 @@ msgstr ""
 
 #: camptix.php:4248
 msgid "Receipt"
-msgstr ""
+msgstr "Административна информация"
+
+msgid "* You will be able to edit all this information later"
+msgstr "* Ще може да редактирате тази информация по-късно"
 
 #: camptix.php:4251
 msgid "E-mail the receipt to"
-msgstr ""
+msgstr "На този e-mail ще пратим връзка за редактиране на информацията"
 
 #: camptix.php:4269
 msgid "Checkout &rarr;"
-msgstr ""
+msgstr "Регистрация &rarr;"
 
 #: camptix.php:4271
 msgid "Claim Tickets &rarr;"
