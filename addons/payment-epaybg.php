@@ -109,6 +109,8 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 		ob_start();
 		$payload = $this->get_payload( $order );
 ?>
+<p>За да платите през Epay.bg, моля натиснете този бутон. Той ще ви отведе в сайта на Epay, където ще може да платите билетите си:</p>
+
 <form action="<?php echo $this->options['sandbox']? 'https://devep2.datamax.bg/ep2/epay2_demo/' : 'https://www.epay.bg/'; ?>" method=post>
 	<input type=hidden name=PAGE value="paylogin">
 	<input type=hidden name=ENCODED value="<?php echo $payload['encoded']; ?>">
