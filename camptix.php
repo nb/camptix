@@ -4177,6 +4177,7 @@ class CampTix_Plugin {
 				</table>
 
 				<h2 id="tix-registration-information"><?php _e( 'Registration Information', 'camptix' ); ?></h2>
+				<h3><?php _e( '* You will be able to edit all this information later', 'camptix' );?></h3>
 				<?php foreach ( $this->tickets_selected as $ticket_id => $count ) : ?>
 					<?php foreach ( range( 1, $count ) as $looping_count_times ) : ?>
 
