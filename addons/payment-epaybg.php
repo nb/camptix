@@ -82,9 +82,11 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 				case 'PAID':
 					$code = CampTix_Plugin::PAYMENT_STATUS_COMPLETED;
 					$details = array(
-						'date' => $match[4],
-						'stan' => $match[5],
-						'bcode' => $match[6],
+						'transaction_details' => array(
+							'date' => $match[4],
+							'stan' => $match[5],
+							'bcode' => $match[6],
+						),
 						'transaction_id' => $match[5],
 					);
 					break;
