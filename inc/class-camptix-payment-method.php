@@ -98,9 +98,9 @@ class CampTix_Payment_Method extends CampTix_Addon {
 		return $payment_methods;
 	}
 
-	function payment_result( $payment_token, $result, $data = array() ) {
+	function payment_result( $payment_token, $result, $data = array(), $no_redirect = false ) {
 		global $camptix;
-		return $camptix->payment_result( $payment_token, $result, $data );
+		return $camptix->payment_result( $payment_token, $result, $data, $no_redirect );
 	}
 
 	function redirect_with_error_flags( $query_args = array() ) {

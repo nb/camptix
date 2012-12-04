@@ -5498,7 +5498,7 @@ class CampTix_Plugin {
 		return $enabled;
 	}
 
-	function payment_result( $payment_token, $result, $data = array() ) {
+	function payment_result( $payment_token, $result, $data = array(), $no_redirect = false ) {
 		if ( empty( $payment_token ) )
 			die( 'Do not call payment_result without a payment token.' );
 
@@ -5588,16 +5588,22 @@ class CampTix_Plugin {
 		if ( ! $status_changed ) {
 			if ( in_array( $to_status, array( 'pending', 'publish' ) ) ) {
 				// Show the purchased tickets.
-				$access_token = get_post_meta( $attendees[0]->ID, 'tix_access_token', true );
-				$url = add_query_arg( array( 'tix_action' => 'access_tickets', 'tix_access_token' => $access_token ), $this->get_tickets_url() );
-				wp_safe_redirect( $url . '#tix' );
-				die();
+				if ( !$no_redirect ) {
+					$access_token = get_post_meta( $attendees[0]->ID, 'tix_access_token', true );
+					$url = add_query_arg( array( 'tix_action' => 'access_tickets', 'tix_access_token' => $access_token ), $this->get_tickets_url() );
+					wp_safe_redirect( $url . '#tix' );
+					die();
+				}
 			}
 			return;
 		}
 
 		// Send out the tickets and receipt if necessary.
 		$this->email_tickets( $payment_token, $from_status, $to_status );
+
+		if ( $no_redirect ) {
+			return;
+		}
 
 		// Let's make a clean exit out of all of this.
 		switch ( $result ) :
