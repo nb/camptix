@@ -5956,6 +5956,7 @@ class CampTix_Plugin {
 			'field-url'      => $this->get_default_addon_path( 'field-url.php' ),
 			'shortcodes'     => $this->get_default_addon_path( 'shortcodes.php' ),
 			'payment-paypal' => $this->get_default_addon_path( 'payment-paypal.php' ),
+			'payment-epaybg' => $this->get_default_addon_path( 'payment-epaybg.php' ),
 			'logging-meta'  => $this->get_default_addon_path( 'logging-meta.php' ),
 
 			/**
