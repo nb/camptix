@@ -5302,7 +5302,10 @@ class CampTix_Plugin {
 				return;
 			}
 
-			$payment_method_obj->payment_checkout( $payment_token );
+			$result = $payment_method_obj->payment_checkout( $payment_token );
+			if ( is_string( $result ) ) {
+				return $result;
+			}
 
 			// Check whether there were any immediate payment errors.
 			if ( $this->error_flags )
