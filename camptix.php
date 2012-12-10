@@ -744,7 +744,7 @@ class CampTix_Plugin {
 		$tickets = get_posts( array(
 			'posts_per_page' => -1,
 			'post_type' => 'tix_ticket',
-			'post_status' => 'publish',
+			'post_status' => array( 'publish', 'private' ),
 		) );
 
 		foreach ( $tickets as $ticket ) {
@@ -2851,7 +2851,7 @@ class CampTix_Plugin {
 
 		$tickets = get_posts( array(
 			'post_type' => 'tix_ticket',
-			'post_status' => 'publish',
+			'post_status' => array( 'publish', 'private' ),
 			'posts_per_page' => -1,
 		) );
 
@@ -3703,7 +3703,7 @@ class CampTix_Plugin {
 		if ( ! $this->options['archived'] ) {
 			$tickets = get_posts( array(
 				'post_type' => 'tix_ticket',
-				'post_status' => 'publish',
+				'post_status' => array( 'publish', 'private' ),
 				'posts_per_page' => -1,
 			) );
 		} else {
@@ -3941,13 +3941,14 @@ class CampTix_Plugin {
 			$this->error( __( 'Sorry, but the reservation you are trying to use has been cancelled or has expired.', 'camptix' ) );
 
 		ob_start();
+		$using_reservation = isset( $this->reservation ) && $this->reservation;
 		?>
 		<div id="tix">
 			<?php do_action( 'camptix_notices' ); ?>
 			<?php if ( $available_tickets ) : ?>
 			<form action="<?php echo esc_url( add_query_arg( 'tix_action', 'attendee_info', $this->get_tickets_url() ) ); ?>#tix" method="POST">
 
-			<?php if ( isset( $this->reservation ) && $this->reservation ) : ?>
+			<?php if ( $using_reservation ) : ?>
 				<input type="hidden" name="tix_reservation_id" value="<?php echo esc_attr( $this->reservation['id'] ); ?>" />
 				<input type="hidden" name="tix_reservation_token" value="<?php echo esc_attr( $this->reservation['token'] ); ?>" />
 			<?php endif; ?>
@@ -3963,8 +3964,15 @@ class CampTix_Plugin {
 				<tbody>
 					<?php foreach ( $this->tickets as $ticket ) : ?>
 						<?php
+							$using_reservation_for_this_ticket = $using_reservation && $ticket->ID == $this->reservation['ticket_id'];
 							if ( ! $this->is_ticket_valid_for_purchase( $ticket->ID ) )
 								continue;
+							if ( $using_reservation && !$using_reservation_for_this_ticket ) {
+								continue;
+							}
+							if ( $ticket->post_status != 'publish' && !( $ticket->post_status == 'private' && $using_reservation_for_this_ticket ) ) {
+								continue;
+							}
 
 							$price = $ticket->tix_price;
 							$discounted = '';
@@ -4893,7 +4901,7 @@ class CampTix_Plugin {
 		$post = get_post( $post_id );
 		if ( ! $post ) return false;
 		if ( $post->post_type != 'tix_ticket' ) return false;
-		if ( $post->post_status != 'publish' ) return false;
+		if ( ! in_array( $post->post_status, array( 'publish', 'private' ) ) ) return false;
 
 		$via_reservation = false;
 		if ( isset( $this->reservation ) && $this->reservation )
@@ -5324,7 +5332,7 @@ class CampTix_Plugin {
 	function verify_order( &$order = array() ) {
 		$tickets_objects = get_posts( array(
 			'post_type' => 'tix_ticket',
-			'post_status' => 'publish',
+			'post_status' => array( 'publish', 'private' ),
 			'posts_per_page' => -1,
 		) );
 
