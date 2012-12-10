@@ -151,6 +151,14 @@ body.admin-bar #tix {
 	display: block;
 }
 
+.tix_tickets_table tbody td {
+	font-weight: normal;
+	text-align: left;
+}
+
+.tix_tickets_table thead th {
+	text-align: left;
+}
 /**
  * === RTL Styles ===
  * Should always be at the EOF, since they need to override
