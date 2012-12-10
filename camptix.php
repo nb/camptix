@@ -3890,7 +3890,7 @@ class CampTix_Plugin {
 		foreach ( $this->tickets as $ticket )
 			if ( $this->is_ticket_valid_for_purchase( $ticket->ID ) )
 				$available_tickets++;
-			if ( 'private' == $ticket->post_status && ( !$using_reservation || $this->reservation['ticket_id'] == $ticket->ID ) )
+			if ( 'private' == $ticket->post_status && ( !$using_reservation || $this->reservation['ticket_id'] != $ticket->ID ) )
 				$available_tickets--;
 
 		if ( isset( $this->error_flags['invalid_coupon'] ) )
