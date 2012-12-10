@@ -3884,11 +3884,14 @@ class CampTix_Plugin {
 	 * Step 1: shows the available tickets table.
 	 */
 	function form_start() {
+		$using_reservation = isset( $this->reservation ) && $this->reservation;
 
 		$available_tickets = 0;
 		foreach ( $this->tickets as $ticket )
 			if ( $this->is_ticket_valid_for_purchase( $ticket->ID ) )
 				$available_tickets++;
+			if ( 'private' == $ticket->post_status && ( !$using_reservation || $this->reservation['ticket_id'] == $ticket->ID ) )
+				$available_tickets--;
 
 		if ( isset( $this->error_flags['invalid_coupon'] ) )
 			$this->error( __( 'Sorry, but the coupon you have entered seems to be invalid or expired.', 'camptix' ) );
@@ -3941,7 +3944,6 @@ class CampTix_Plugin {
 			$this->error( __( 'Sorry, but the reservation you are trying to use has been cancelled or has expired.', 'camptix' ) );
 
 		ob_start();
-		$using_reservation = isset( $this->reservation ) && $this->reservation;
 		?>
 		<div id="tix">
 			<?php do_action( 'camptix_notices' ); ?>
