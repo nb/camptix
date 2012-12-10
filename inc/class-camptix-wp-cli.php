@@ -9,6 +9,7 @@ class Camptix_Command extends WP_CLI_Command {
 	function add_reservations( $args, $assoc_args ) {
 		global $camptix;
 		list( $post_id, $file_name ) = $args;
+		$test_mode = isset( $assoc_args['test'] );
 		if ( 'tix_ticket' != get_post_type( $post_id ) ) {
 			WP_CLI::error( "There's no ticket with post_id '$post_id'." );
 		}
@@ -26,8 +27,11 @@ class Camptix_Command extends WP_CLI_Command {
 				WP_CLI::line( "Skipping {$reservation['name']}, because it doesn't have an e-mail." );
 				continue;
 			}
-			WP_CLI::line( "Creating a reservation for '{$reservation['name']}' for {$reservation['quantity']} tickets." );
-			$camptix->create_reservation( $post_id, $reservation['name'], $reservation['quantity'] );
+			$test_text = $test_mode? 'test' : '';
+			WP_CLI::line( "Creating a $test_text reservation for '{$reservation['name']}' for {$reservation['quantity']} tickets." );
+			if ( !$test_mode ) {
+				$camptix->create_reservation( $post_id, $reservation['name'], $reservation['quantity'] );
+			}
 		}
 	}
 }
