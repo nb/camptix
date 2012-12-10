@@ -3787,10 +3787,10 @@ class CampTix_Plugin {
 			$ticket = $this->tickets[$ticket_id];
 
 			// Don't allow more than 10 tickets of each type to be purchased in bulk.
-			if ( $count > 10 && $ticket->tix_remaining > 10 ) {
-				$this->tickets_selected[$ticket_id] = 10;
+			if ( $count > 10 && $ticket->tix_remaining > 20 ) {
+				$this->tickets_selected[$ticket_id] = 20;
 				$count = 10;
-				$tickets_excess += $count - 10;
+				$tickets_excess += $count - 20;
 			}
 
 			// ref: #1001
@@ -3984,14 +3984,14 @@ class CampTix_Plugin {
 							$price = $ticket->tix_price;
 							$discounted = '';
 
-							$max = min( $ticket->tix_remaining, 10 );
+							$max = min( $ticket->tix_remaining, 20 );
 							$selected = ( 1 == count( $this->tickets ) ) ? 1 : 0;
 							if ( isset( $this->tickets_selected[$ticket->ID] ) )
 								$selected = intval( $this->tickets_selected[$ticket->ID] );
 
 							// Recount selects, change price.
 							if ( $ticket->tix_coupon_applied ) {
-								$max = min( $this->coupon->tix_coupon_remaining, $ticket->tix_remaining, 10 );
+								$max = min( $this->coupon->tix_coupon_remaining, $ticket->tix_remaining, 20 );
 								if ( $selected > $this->coupon->tix_coupon_remaining )
 									$selected = $this->coupon->tix_coupon_remaining;
 
@@ -5430,8 +5430,8 @@ class CampTix_Plugin {
 				$this->error_flag( 'tickets_excess' );
 			}
 
-			if ( $item['quantity'] > 10 ) {
-				$item['quantity'] = min( 10, $ticket->tix_remaining );
+			if ( $item['quantity'] > 20 ) {
+				$item['quantity'] = min( 20, $ticket->tix_remaining );
 				$this->error_flag( 'tickets_excess' );
 			}
 
