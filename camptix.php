@@ -3957,7 +3957,6 @@ class CampTix_Plugin {
 					<tr>
 						<th class="tix-column-description"><?php _e( 'Description', 'camptix' ); ?></th>
 						<th class="tix-column-price"><?php _e( 'Price', 'camptix' ); ?></th>
-						<th class="tix-column-remaining"><?php _e( 'Remaining', 'camptix' ); ?></th>
 						<th class="tix-column-quantity"><?php _e( 'Quantity', 'camptix' ); ?></th>
 					</tr>
 				</thead>
@@ -3994,15 +3993,17 @@ class CampTix_Plugin {
 								<br /><small class="tix-discount"><?php echo esc_html( $ticket->tix_discounted_text ); ?></small>
 								<?php endif; ?>
 							</td>
-							<td class="tix-column-price" style="vertical-align: middle;">
+							<td class="tix-column-price">
 								<?php if ( $price > 0 ) : ?>
 								<?php echo $this->append_currency( $price ); ?>
 								<?php else : ?>
-									Free
+									Безплатно
 								<?php endif; ?>
 							</td>
-							<td class="tix-column-remaining" style="vertical-align: middle;"><?php echo $ticket->tix_remaining; ?></td>
-							<td class="tix-column-quantity" style="vertical-align: middle;">
+							<?php /*
+							<td class="tix-column-remaining"><?php echo $ticket->tix_remaining; ?></td>
+							*/ ?>
+							<td class="tix-column-quantity">
 								<select name="tix_tickets_selected[<?php echo $ticket->ID; ?>]">
 									<?php foreach ( range( 0, $max ) as $value ) : ?>
 									<option <?php selected( $selected, $value ); ?> value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></option>
@@ -4149,7 +4150,7 @@ class CampTix_Plugin {
 								<?php if ( $price > 0 ) : ?>
 									<?php echo $this->append_currency( $price ); ?>
 								<?php else : ?>
-									Free
+									Безплатно
 								<?php endif; ?>
 								</td>
 								<td class="tix-column-quantity"><?php echo intval( $count ); ?></td>
