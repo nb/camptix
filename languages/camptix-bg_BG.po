@@ -203,19 +203,19 @@ msgstr "Цена на билета"
 
 #: camptix.php:547 camptix.php:3374
 msgid "Order Total"
-msgstr ""
+msgstr "Общо в поръчката"
 
 #: camptix.php:617 camptix.php:2939
 msgid "Used"
-msgstr ""
+msgstr "Използвани"
 
 #: camptix.php:619
 msgid "Discount"
-msgstr ""
+msgstr "Отстъпка"
 
 #: camptix.php:621 camptix.php:779 camptix.php:785 camptix.php:790
 msgid "Tickets"
-msgstr ""
+msgstr "Билети"
 
 #: camptix.php:680
 msgid "Sent"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: camptix.php:682
 msgid "Total"
-msgstr ""
+msgstr "Общо"
 
 #: camptix.php:781 camptix.php:784
 msgid "New Ticket"
@@ -1299,7 +1299,7 @@ msgstr "Регистрация &rarr;"
 
 #: camptix.php:4271
 msgid "Claim Tickets &rarr;"
-msgstr ""
+msgstr "Регистрация &rarr;"
 
 #: camptix.php:4322
 msgid "Please note that the payment for this set of tickets is still pending."
@@ -1411,11 +1411,17 @@ msgstr ""
 
 #: camptix.php:5683
 msgid "Total: %s"
-msgstr ""
+msgstr "Общо: %s"
 
 #: camptix.php:5684
 msgid "Let us know if you have any questions!"
 msgstr ""
+"Поздрави,\n"
+"Алек, Ники, Теди и Яна\n"
+"организатори на TEDxBG\n"
+"http://tedxbg.org/\n"
+"\n"
+"TEDxBG е първият български TEDx и се провежда за четвърта година. TEDx е мрежа от световни независими конференции за споделяне на идеи, организирани по лиценз на TED."
 
 #: camptix.php:5697
 #, fuzzy
@@ -1442,7 +1448,7 @@ msgstr ""
 
 #: camptix.php:5698 camptix.php:5722
 msgid "Your Ticket to %s"
-msgstr ""
+msgstr "Билетът ви за TEDxBG"
 
 #: camptix.php:5717
 msgid ""
@@ -1467,16 +1473,19 @@ msgid ""
 "\n"
 "%s%s"
 msgstr ""
-"Hey there!\n"
+"Привет от TEDxBG!\n"
 "\n"
-"You have purchased the following ticket:\n"
-"\n"
-"%s\n"
-"\n"
-"You can edit the information for the purchased ticket at any time before the "
-"event, by visiting the following link:\n"
+"Честито! Вие успешно закупихте следните билети:\n"
 "\n"
 "%s\n"
+"\n"
+"Може да редактирате информацията за закупените билети по всяко време преди събитието от тук:\n"
+"\n"
+"%s\n"
+"\n" 
+"На страницата ще намерите инструкции за ползването на билетите и ще можете да промените името на билета, ако пожелаете.\n"
+"\n"
+"Ще ви очакваме с нетърпение на 12-и януари в Софийската опера и балет! До тогава можете да следите новините около събитието на http://tedxbg.org/tedx2013/.\n"
 "\n"
 "%s%s"
 
