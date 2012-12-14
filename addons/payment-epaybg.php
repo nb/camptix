@@ -43,7 +43,7 @@ class CampTix_Payment_Method_EpayBG extends CampTix_Payment_Method {
 	}
 	
 	function template_redirect() {
-		if ( 'epay-response' == get_query_var( 'tix_action' ) ) {
+		if ( 'epay-response' == get_query_var( 'tix_action' ) || ( isset( $_REQUEST['encoded'] ) && isset( $_REQUEST['checksum'] ) ) ) {
 			$this->payment_process_response();
 		}
 	}
