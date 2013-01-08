@@ -1110,7 +1110,7 @@ msgstr ""
 msgid ""
 "Sorry, but there are currently no tickets for sale. Please try again later."
 msgstr ""
-"Билетите ще се продават скоро."
+"Всички билети за TEDxBG 2013 са изчерпани."
 
 #: camptix.php:3901
 msgid "You are using a reservation, cool!"
