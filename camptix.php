@@ -3710,6 +3710,7 @@ class CampTix_Plugin {
 				'post_type' => 'tix_ticket',
 				'post_status' => array( 'publish', 'private' ),
 				'posts_per_page' => -1,
+				'orderby' => 'title',
 			) );
 		} else {
 			// No tickets for archived events.
@@ -3892,11 +3893,13 @@ class CampTix_Plugin {
 		$using_reservation = isset( $this->reservation ) && $this->reservation;
 
 		$available_tickets = 0;
-		foreach ( $this->tickets as $ticket )
+		foreach ( $this->tickets as $ticket ) {
 			if ( $this->is_ticket_valid_for_purchase( $ticket->ID ) )
 				$available_tickets++;
-			if ( 'private' == $ticket->post_status && ( !$using_reservation || $this->reservation['ticket_id'] != $ticket->ID ) )
+			if ( $this->is_ticket_valid_for_purchase( $ticket->ID ) && 'private' == $ticket->post_status && ( !$using_reservation || $this->reservation['ticket_id'] != $ticket->ID ) ) {
 				$available_tickets--;
+			}
+		}
 
 		if ( isset( $this->error_flags['invalid_coupon'] ) )
 			$this->error( __( 'Sorry, but the coupon you have entered seems to be invalid or expired.', 'camptix' ) );
@@ -3959,6 +3962,7 @@ class CampTix_Plugin {
 				<input type="hidden" name="tix_reservation_id" value="<?php echo esc_attr( $this->reservation['id'] ); ?>" />
 				<input type="hidden" name="tix_reservation_token" value="<?php echo esc_attr( $this->reservation['token'] ); ?>" />
 			<?php endif; ?>
+			<?php if ( !$using_reservation ) echo '<p><strong>Всички билети за TEDxBG 2013 в София са продадени.</strong></p> В момента се продават билети само за преките излъчвания в няколко други града:';?>
 
 			<table class="tix_tickets_table">
 				<thead>
@@ -4239,7 +4243,7 @@ class CampTix_Plugin {
 
 								<?php
 									do_action( 'camptix_question_fields_init' );
-									$i = 0; // Used for questions class names.
+									$j = 0; // Used for questions class names.
 								?>
 								<?php foreach ( $questions as $question ) : ?>
 
@@ -4248,7 +4252,7 @@ class CampTix_Plugin {
 										$name = sprintf( 'tix_attendee_questions[%d][%s]', $i, $question_key );
 										$value = isset( $this->form_data['tix_attendee_questions'][$i][$question_key] ) ? $this->form_data['tix_attendee_questions'][$i][$question_key] : '';
 										$question_type = $question['type'];
-										$class_name = 'tix-row-question-' . ++$i;
+										$class_name = 'tix-row-question-' . ++$j;
 									?>
 									<tr class="<?php echo esc_attr( $class_name ); ?>">
 										<td class="<?php if ( $question['required'] ) echo 'tix-required'; ?> tix-left"><?php echo esc_html( $question['field'] ); ?><?php if ( $question['required'] ) echo ' <span class="tix-required-star">*</span>'; ?></td>
@@ -4827,8 +4831,9 @@ class CampTix_Plugin {
 			'update_post_meta_cache' => false,
 		) );
 
-		if ( $posts )
+		if ( $posts ) {
 			return $posts[0]->ID;
+		}
 
 		return false;
 	}
