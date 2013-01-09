@@ -312,6 +312,7 @@ class CampTix_Plugin {
 		add_shortcode( 'last_name', array( $this, 'notify_shortcode_last_name' ) );
 		add_shortcode( 'email', array( $this, 'notify_shortcode_email' ) );
 		add_shortcode( 'ticket_url', array( $this, 'notify_shortcode_ticket_url' ) );
+		add_shortcode( 'start_time', array( $this, 'notify_shortcode_start_time' ) );
 	}
 
 	/**
@@ -347,6 +348,17 @@ class CampTix_Plugin {
 
 		$edit_token = get_post_meta( $this->notify_shortcodes_attendee_id, 'tix_edit_token', true );
 		return $this->get_edit_attendee_link( $this->notify_shortcodes_attendee_id, $edit_token );
+	}
+
+	function notify_shortcode_start_time( $atts ) {
+		if ( ! $this->notify_shortcodes_attendee_id )
+			return;
+
+		if ( $this->notify_shortcodes_attendee_id % 10 < 5 ) {
+			return '9:00';
+		} else {
+			return '9:15';
+		}
 	}
 
 	/**
